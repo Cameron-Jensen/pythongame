@@ -43,7 +43,7 @@ def main():
         for asteroid_obj in asteroid.copy():  # Same here
           if shot.collision(asteroid_obj):
             shot.kill()  # Remove shot from all groups
-            asteroid_obj.kill()  # Remove asteroid from all groups
+            asteroid_obj.split()  # Remove asteroid from all groups
             timer = PLAYER_SHOOT_COOLDOWN
             break  # Break after handling one collision per shot
       dt2=clock.tick(60)
