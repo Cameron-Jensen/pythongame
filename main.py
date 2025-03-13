@@ -25,6 +25,7 @@ def main():
    dt=0
    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, PLAYER_RADIUS)
    asteroidfield = AsteroidField()
+   timer = 0
    while True:
       screen.fill((0,0,0))
       for draw in drawable:
@@ -43,10 +44,12 @@ def main():
           if shot.collision(asteroid_obj):
             shot.kill()  # Remove shot from all groups
             asteroid_obj.kill()  # Remove asteroid from all groups
+            timer = PLAYER_SHOOT_COOLDOWN
             break  # Break after handling one collision per shot
       dt2=clock.tick(60)
       updateable.update(dt)
       dt=dt2/1000
+      timer -= dt
 
 if __name__ == "__main__":
     main()

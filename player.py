@@ -6,6 +6,7 @@ class Player(CircleShape):
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
         self.rotation = 0
+        self.shoot_cooldown = 0
 
     # in the player class
     def triangle(self):
@@ -33,6 +34,10 @@ class Player(CircleShape):
         return new_shot  # The return isn't necessary if containers are set properly
 
     def update(self, dt):
+        # Update the cooldown timer
+        if self.shoot_cooldown > 0:
+            self.shoot_cooldown -= dt
+    
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_a]:
@@ -44,4 +49,7 @@ class Player(CircleShape):
         if keys[pygame.K_s]:
             self.move(-dt)
         if keys[pygame.K_SPACE]:
-            self.shoot()
+            if self.shoot_cooldown <= 0:  # Only shoot if cooldown is expired
+                self.shoot()
+                # Reset the cooldown
+                self.shoot_cooldown = PLAYER_SHOOT_COOLDOWN
